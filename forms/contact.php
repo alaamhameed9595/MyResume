@@ -8,7 +8,8 @@
  */
 
 // Replace contact@example.com with your real receiving email address
-$receiving_email_address = 'alaamhameed9595@gmail.com';
+
+/* $receiving_email_address = 'alaamhameed9595@gmail.com';
 
 if (file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php')) {
   include($php_email_form);
@@ -39,3 +40,22 @@ $contact->add_message($_POST['email'], 'Email');
 $contact->add_message($_POST['message'], 'Message', 10);
 
 echo $contact->send();
+*/
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $from = htmlspecialchars($_POST['email']);
+  $subject = htmlspecialchars($_POST['subject']);
+  $message = htmlspecialchars($_POST['message']);
+
+  // Set additional headers
+  $headers = "From: " . $from . "\r\n";
+  $headers .= "Reply-To: " . $to . "\r\n";
+  $headers .= "Content-type: text/plain; charset=UTF-8\r\n";
+  $to = "alaamh2022@gmail.com";
+  if (mail($to, $subject, $message, $headers)) {
+    echo "Email sent successfully!";
+  } else {
+    echo "Failed to send email.";
+  }
+}
